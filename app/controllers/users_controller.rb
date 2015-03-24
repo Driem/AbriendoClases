@@ -29,6 +29,7 @@ class UsersController < ApplicationController
     @user.password = @user.cuenta
     @user.password_confirmation = @user.cuenta
  		if @user.save
+      UserMailer.signup_confirmation(@user).deliver
   	  redirect_to users_path, :notice => "El usuario ha sido registrado!"
   	else
     	render "new"
