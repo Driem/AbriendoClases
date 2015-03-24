@@ -1,3 +1,6 @@
+<div class="content-wrapper">
+ <section class="content-header">
+
 <% if userIsCoordinator %>
 	<p id="notice"><%= notice %></p>
 
@@ -21,3 +24,6 @@
 <% else %>
 	<%= controller.redirect_to requests_path %>
 <% end %>
+
+</section>
+</div>

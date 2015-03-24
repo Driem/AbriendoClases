@@ -5,42 +5,121 @@
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
-</head>
-<body>
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <!-- Ionicons -->
+  <link href="http://code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css" rel="stylesheet" type="text/css" /></head>
+<body class="skin-blue">
+<header class="main-header">
+        <a href="../../index2.html" class="logo">DG Propuestas</a>
+        <!-- Header Navbar: style can be found in header.less -->
+        <nav class="navbar navbar-static-top" role="navigation">
+          <!-- Sidebar toggle button-->
+          
+          <div class="navbar-custom-menu">
+        <ul class="nav navbar-nav">
+              <!-- Messages: style can be found in dropdown.less-->
+              <li class="dropdown messages-menu">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <i class="fa fa-envelope-o"></i>
+                  <span class="label label-success"></span>
+                </a>
+              </li>
+              <!-- Notifications: style can be found in dropdown.less -->
+              <li class="dropdown notifications-menu">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <i class="fa fa-bell-o"></i>
+                  <span class="label label-warning"></span>
+                </a>	
+              </li>
+              <!-- Tasks: style can be found in dropdown.less -->
+              <li class="dropdown tasks-menu">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <i class="fa fa-flag-o"></i>
+                  <span class="label label-danger"></span>
+                </a>
+              </li>
+              <!-- User Account: style can be found in dropdown.less -->
+              <li class="dropdown user user-menu">
+                <a href="/log_out" class="dropdown-toggle" data-toggle="dropdown">
+ 		<% if current_user %>                
+ 		 <span class="hidden-xs">Cerrar sesion</span>
+		<% end %>                
+		</a>  
+              </li>
+            </ul>
+          </div>
+        </nav>   
+</header>
+<!-- Final Parte Superior -->
+<!-- Parte Izquierda -->
+      <!-- Left side column. contains the logo and sidebar -->
+      <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+          <!-- Sidebar user panel -->
+          <div class="user-panel">           
+            <div class="pull-left info">
+              <% if current_user %>
+		<p><%= current_user.email %></p>
+		<% end %>
+              <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+            </div>
+          </div>
+          <!-- search form -->
+          <form action="#" method="get" class="sidebar-form">
+            <div class="input-group">
+              <input type="text" name="q" class="form-control" placeholder="Search..."/>
+              <span class="input-group-btn">
+                <button type='submit' name='seach' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
+              </span>
+            </div>
+          </form>
+          <!-- /.search form -->
+          <!-- sidebar menu: : style can be found in sidebar.less -->
+          <ul class="sidebar-menu">
+<% if current_user %>      
+	<li><p></p></li>
+        <li class="treeview active">
+              <a href="/requests">
+                <i class="fa fa-table"></i> <span>Propuestas</span>
+                
+              </a>
+            </li>
+<% if userIsCoordinator %>
+	<li class="treeview">
+              <a href="/users">
+                <i class="fa fa-pie-chart"></i>
+                <span>Usuarios</span>
+              </a>
+            </li>
 
+         <li class="treeview">
+              <a href="/courses">
+                <i class="fa fa-laptop"></i>
+                <span>Clases</span>
+              </a>  
+                
+            </li>
 
+         <li class="treeview">
+              <a href="/user_in_requests">
+                <i class="fa fa-edit"></i> <span>Usuarios en Propuesta</span>
+              </a>
+             
+            </li>
+         
+	
+       <li><p></p></li>
+            <li><a href="/states"><i class="fa fa-circle-o text-danger"></i> Estados</a></li>
+            <li><a href="/schedules"><i class="fa fa-circle-o text-warning"></i> Horarios</a></li>
+     <% end %>   
+	  <li><a href="/users/u/edit"><i class="fa fa-circle-o text-info"></i> Editar Informacion</a></li>
+          </ul>
+<% end %>	
+      	  </section>
+        <!-- /.sidebar -->
+      </aside>
 
-<div id="user_nav">
-  <% if current_user %>
-    Conectado como <%= current_user.email %>.
-    <%= link_to "Cerrar sesión", log_out_path %>
-  <% end %>
-</div>
-
-<% if current_user %>
-	<% if userIsCoordinator %>
-		<%= link_to "Usuarios", users_path %> |
-		<%= link_to "Propuestas", requests_path %> |
-		<%= link_to "Clases", courses_path %> |
-		<%= link_to "Horarios", schedules_path %> |
-		<%= link_to "Estados", states_path %> |
-		<%= link_to "Usuarios en propuestas", user_in_requests_path %> |
-	<% end %>
-<% end %>
-
-<div>
-<% if current_user %>
-	<%= link_to 'Editar informacion', "/users/u/edit" %>
-	<% if !userIsCoordinator %>
-		<% u = current_user.id %> 
-		| <%= link_to "Propuestas", requests_path %>
-	<% end %>
-<% end %>
-</div>
-
-<% flash.each do |name, msg| %>
-  <%= content_tag :div, msg, :id => "flash_#{name}" %>
-<% end %>
 
 <%= yield %>
 

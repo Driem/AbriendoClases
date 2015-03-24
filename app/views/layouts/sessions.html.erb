@@ -8,15 +8,6 @@
 </head>
 <body>
 
-
-
-<div id="user_nav">
-  <% if current_user %>
-    Conectado como <%= current_user.email %>.
-    <%= link_to "Cerrar sesión", log_out_path %>
-  <% end %>
-</div>
-
 <%= yield %>
 
 </body>

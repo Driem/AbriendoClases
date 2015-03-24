@@ -1,3 +1,6 @@
+<div class="content-wrapper">
+ <section class="content-header">
+
 <h1>Listado de propuestas</h1>
 
 <h2>Propuestas Iniciales</h2>
@@ -30,7 +33,7 @@
 	      <td><%= link_to 'Borrar', request, method: :delete, data: { confirm: '¿Borrar propuesta?' } %></td>
             <% end %>
             <% if UserInRequest.where(:user_id => current_user.id, :request_id =>request.id).count == 0 %>
-              <td><%= link_to 'Registrarme', {:controller => :requests, :action=>'registrarme', :request_id => request.id ,:course_id => request.course_id, :schedule_id => request.schedule_id} %></td>
+            <td><%= link_to 'Registrarme', {:controller => :requests, :action=>'registrarme', :request_id => request.id ,:course_id => request.course_id, :schedule_id => request.schedule_id} %></td>
             <% end %>
 	    <% if UserInRequest.where(:user_id => current_user.id, :request_id =>request.id).count == 1 %>
         	<td><%= link_to 'Quitarme', '/requests/quitarme?request_id='+request.id.to_s %></td>
@@ -63,7 +66,11 @@
 	  	<td><%= request.course.name %></td>
 	  	<td><%= request.schedule.name %></td>
 	  	<td><%= request.state.name %></td>
-        <td><%= (UserInRequest.where(:request_id => request.id).count)%></td>
+        <% if UserInRequest.where(:request_id => request.id, :user_id => 1).count == 1%>
+          <td><%= (UserInRequest.where(:request_id => request.id).count) -1%></td>
+        <% else%>
+          <td><%= (UserInRequest.where(:request_id => request.id).count) %></td>
+        <% end %>
         <td><%= link_to 'Mostrar', request %></td>
 	    <% if userIsCoordinator %>
         	<td><%= link_to 'Editar', edit_request_path(request) %></td>
@@ -109,7 +116,7 @@
 	<td><%= request.course.name %></td>
 	<td><%= request.schedule.name %></td>
 	<td><%= request.state.name %></td>
-        <td><%= UserInRequest.where(:request_id => request.id).count %></td>
+        <td><%= (UserInRequest.where(:request_id => request.id).count) %></td>
         <td><%= link_to 'Mostrar', request %></td>
 				<% if userIsCoordinator %>
         	<td><%= link_to 'Editar', edit_request_path(request) %></td>
